@@ -1,8 +1,9 @@
 import { useContext, useState } from 'react';
-// import './styles.css'
+ //import './styles.css'
 import { useNavigate } from 'react-router-dom';
 import { loginCliente } from '../../api/cliente';
-//import { AuthContext } from '../../auth/Context';
+import { AuthContext } from '../../auth/Context';
+import { toast } from 'react-toastify'
 
 export default function Login() {  
   const {login, token} = useContext(AuthContext)
@@ -39,7 +40,7 @@ export default function Login() {
           <label htmlFor="senha">Senha:</label>
           <input type="password" id="senha" required  value={senha}onChange={(e) => setSenha(e.target.value)}/>
         </div>
-        <p>Não possui conta? <spam className="signup">Cadastre-se</spam></p>
+        <p>Não possui conta? <span className="signup">Cadastre-se</span></p>
         <button className="button" type="submit"
         onClick={handleLogin}
         >Entrar</button>

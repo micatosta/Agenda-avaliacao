@@ -1,7 +1,7 @@
 import ServiceAtendimento from '../service/atendimento.js'
 
 class ControllerAtendimento {
-    async FindAll(_,res) {
+    async FindAll(req, res) {
         try {
             const atendimentos = await ServiceAtendimento.FindAll()
             res.status(200).send({atendimentos})
@@ -48,4 +48,4 @@ class ControllerAtendimento {
         }
     }
 }
-  export default new ControllerAtendimento()
+  export default new ControllerAtendimento();

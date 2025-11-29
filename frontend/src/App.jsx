@@ -9,7 +9,7 @@ import CreateCliente from './pages/Clientes/create'
 import UpdateCliente from './pages/Clientes/update'
 import { ToastContainer } from 'react-toastify'
 import Login from './pages/Login'
-//import { AuthProvider } from './auth/Context'
+import { AuthProvider } from './auth/Context'
 import PrivateRoute from './router/PrivateRoute'
 
 function App() {

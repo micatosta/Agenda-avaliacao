@@ -1,5 +1,5 @@
 import database from "../config/database.js"
-import atendimento from "./atendimento.js"
+
 class Cliente {
    
    
@@ -23,8 +23,13 @@ class Cliente {
         })
     }
 }
-const ModelAtendimento = new atendimento().model;
-new this.model.Hasmany(ModelAtendimento) 
+Cliente.associate = function() {
+  Cliente.hasMany(Atendimento, { 
+    as: 'atendimentos', 
+    foreignKey: 'clienteId' 
+  }); 
+};
+
     
 
-export default new Cliente();
+export default new Cliente().model

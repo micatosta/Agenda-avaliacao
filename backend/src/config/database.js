@@ -1,4 +1,4 @@
-import {Sequelize} from 'sequelize'
+import { Sequelize } from 'sequelize'
 
 class Database{
     constructor() {
@@ -9,7 +9,7 @@ class Database{
             database: 'agenda',
             host: 'localhost',
             password:'',
-            username: 'dev',
+            username: 'root',
             dialect:'mysql'
            
         })

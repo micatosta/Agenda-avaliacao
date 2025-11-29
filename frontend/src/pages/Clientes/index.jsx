@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { getClientes, deleteCliente } from '../../api/clientes'
+import {getCliente, deleteCliente} from '../../api/cliente'
 import { Link } from 'react-router-dom'
 import './styles.css'
 
-import { toast } from 'react-toastify'
 
 
-function Clientes() {
+
+function Cliente() {
     const [clientes , setClientes] = useState([])
 
     const handleUpdate = async (cliente) => {
@@ -26,7 +26,7 @@ function Clientes() {
     
     useEffect(() => {
         async function carregar() {
-            const allCliente =  await getClientes()
+            const allCliente =  await getCliente()
             setClientes(allCliente)
         }
         carregar()
@@ -69,7 +69,7 @@ function Clientes() {
     )
 }
 
-export default Users
+export default Cliente
             
                 
             

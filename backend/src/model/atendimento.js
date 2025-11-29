@@ -1,6 +1,6 @@
 import database from '../config/database.js'
 import atendimento from '../service/atendimento.js';
-import cliente from './cliente.js'
+import Cliente from '../model/cliente.js'
 
 
 class Atendimento{
@@ -30,8 +30,13 @@ class Atendimento{
         })
     }
 }
-const ModelCliente = new cliente().model
-new atendimento.belongsTo(ModelCliente)
+Atendimento.belongsTo(Cliente, { 
+    foreignKey: 'clienteId', 
+    as: 'cliente' 
+});
+if (Cliente.associate) {
+    Cliente.associate();
+}
 
 
 export default new Atendimento();

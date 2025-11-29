@@ -5,7 +5,7 @@
 //     "ativo": true
 
 import { useState } from "react"
-import { CreateCliente } from "../../api/clientes";
+import { createCliente } from "../../api/cliente";
 import { useNavigate } from "react-router-dom";
 import './styles.css'
 const INITIAL_STATE = {
@@ -34,7 +34,7 @@ export default function CreateCliente() {
     const handleSave = async (e) => {
         e.preventDefault()
         // seria idela validar os valores do objeto antes de enviar
-        const response = await CreateCliente(cliente)
+        const response = await createCliente(cliente)
 
         if (response.status === 201) {
             navigate('/clientes')

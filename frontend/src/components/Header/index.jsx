@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import './styles.css'
-//import { AuthContext } from '../../auth/Context'
-
+import { AuthContext } from '../../auth/Context'
+import { useContext } from 'react'
 export default function Header() {
     // pegar o token 
      const { token }  = useContext(AuthContext)

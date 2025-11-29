@@ -1,80 +1,83 @@
-import Cliente from '../model/cliente.js'
+import Cliente from "../model/cliente.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import cliente from '../model/cliente.js';
 
+const SALT = 10
+const JWT_SECRET = "M3uS3gr3d0"
 
-const JWT_SEGREDO = "M3uS3gr3d0"
-const SALT = 10;
 class ServiceCliente {
+  async FindAll() {
+    return await Cliente.findAll()
+  }
 
-    FindAll() {
-        // return User.FindAll()
+  async FindOne(id) {
+    if (!id) {
+      throw new Error('Favor informar o ID!')
     }
 
-    async FindOne(id) {
-        if (!id) {
-            throw new Error("Favor informar o ID")
-        }
+    const cliente = await Cliente.findByPk(id)
 
-        // preciso procurar um usuario no banco
-        const cliente = await cliente.findByPk(id)
-
-        if (!cliente) {
-            throw new Error(`Usuário ${id} não encontrado`)
-        }
-
-        return cliente
+    if (!cliente) {
+      throw new Error(`Cliente ${id} não encontrado!`)
     }
 
-    async Create(nome, email, senha, ) {
-        if (!nome || !email || !senha) {
-            throw new Error("favor preencher todos os campos")
-        }
-        const senhaCriptografada = await bcrypt.hash(String(senha), SALT)
+    return cliente
+  }
 
-        await cliente.create({
-            nome,
-            email,
-            senha: senhaCriptografada,
-           
-        })
+  async Create(nome, email, senha) {
+    if (!nome || !email || !senha) {
+      throw new Error('Favor preencher todos os campos!')
     }
 
-    async Update(id, nome,senha) {
-       const oldCliente = cliente.findByPk(id)
-        
-       // onload.User.nome = nome || oldUser.nome
-        onload.Cliente.senha = senha
-        ?  await bcrypt.hash(String(senha), SALT)
-        :  oldCliente.senha
+    const senhaCript = await bcrypt.hash(String(senha), SALT)
 
-        // User.Update(id, nome)
+    await Cliente.create({
+      nome, email, senha: senhaCript
+    })
+  }
+
+  async Update(id, nome, email, senha) {
+    const oldCliente = await Cliente.findByPk(id)
+
+    if (!oldCliente) {
+      throw new Error('Cliente não encontrado!')
     }
 
-    Delete(id) {
-        // User.Delete(id)
+    oldCliente.nome = nome || oldCliente.nome
+    oldCliente.email = email || oldCliente.email
+    oldCliente.senha = senha 
+      ? await bcrypt.hash(String(senha), SALT)
+      : oldCliente.senha
+
+    oldCliente.save()
+  }
+
+  async Delete(id) {
+    const oldCliente = await Cliente.findByPk(id)
+    if (!oldCliente) {
+      throw new Error('CLiente não encontrado!')
     }
 
-    async Login(email, senha) {
-        if(!email || !senha) {
-            throw new Error("Email ou senha inválidos.")
-        }
+    oldCliente.destroy(id)
+  }
 
-        const cliente = await Cliente.findOne({ where: { email } })
-
-        if (!cliente
-            || !(await bcrypt.compare(String(senha),cliente.senha))
-        ) {
-            throw new Error("Email ou senha inválidos.")
-        }
-
-        return jwt.sign(
-            { id: cliente.id, nome: cliente.nome},
-            JWT_SEGREDO,
-            { expiresIn: 60 * 60 }
-        )
+  async Login(email, senha) {
+    if (!email || !senha) {
+      throw new Error('Email ou senha inválidos.')
     }
+
+    const cliente = await Cliente.findOne({ where: { email } })
+
+    if (!cliente || !(await bcrypt.compare(String(senha), cliente.senha))) {
+      throw new Error('Email ou senha inválidos.')
+    }
+
+    return jwt.sign(
+      { id: cliente.id, nome: cliente.nome },
+      JWT_SECRET,
+      { expiresIn: 60 * 60 }
+    )
+  }
 }
 
 export default new ServiceCliente()
