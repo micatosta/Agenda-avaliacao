@@ -30,13 +30,7 @@ class Atendimento{
         })
     }
 }
-Atendimento.belongsTo(Cliente, { 
-    foreignKey: 'clienteId', 
-    as: 'cliente' 
-});
-if (Cliente.associate) {
-    Cliente.associate();
-}
+
 
 
 export default new Atendimento();
