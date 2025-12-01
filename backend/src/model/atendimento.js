@@ -1,7 +1,4 @@
 import database from '../config/database.js'
-import atendimento from '../service/atendimento.js';
-import Cliente from '../model/cliente.js'
-
 
 class Atendimento{
     constructor(){
@@ -34,3 +31,5 @@ class Atendimento{
 
 
 export default new Atendimento();
+
+

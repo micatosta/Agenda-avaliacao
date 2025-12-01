@@ -1,5 +1,6 @@
 import database from "../config/database.js"
 
+
 class Cliente {
    
    
@@ -23,12 +24,8 @@ class Cliente {
         })
     }
 }
-Cliente.associate = function() {
-  Cliente.hasMany(Atendimento, { 
-    as: 'atendimentos', 
-    foreignKey: 'clienteId' 
-  }); 
-};
+
+
 
     
 

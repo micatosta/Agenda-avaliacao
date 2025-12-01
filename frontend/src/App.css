@@ -1,6 +1,6 @@
 .cabecalho {
   padding: 30px 30px 20px 30px;
-  color: white;
+  color: rgb(19, 7, 92);
   background-color: rgb(39, 43, 51);
 }
 
@@ -16,7 +16,7 @@ a {
 }
 a:hover {
   text-decoration: none;
-  color: #4288ce;
+  color: #84dbfa;
 }
 
 .home {
