@@ -1,10 +1,25 @@
-header {
-    background-color: #90BA12;
-    color: white;
-    padding: 1em;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-    align-items: center; /* Alinhar Verticalmente | */
-    justify-content: center; /* Alinhar Horizontalmente -- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+footer {
+  background-color: rgb(124, 213, 243);
+  width: 100%;
+  height: 10%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+footer > p {
+  font-size: 17px;
+  font-weight: 600;
+  color: #000;
 }

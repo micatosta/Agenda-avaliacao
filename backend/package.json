@@ -1,9 +1,9 @@
 {
-  "name": "revisao-backend",
-  "version": "1.0.0",
-  "description": "Exemplo de Aula - Reviews",
-  "main": "index.js",
   "type": "module",
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "dev": "node --watch ./src/index.js",
     "test": "cross-env TEST=true node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
@@ -12,17 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "express": "^5.1.0",
+    "cors": "^2.8.5",
+    "express": "5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql": "^2.18.1",
     "mysql2": "^3.15.3",
-    "react-toastify": "^11.0.5",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "cross-env": "10.1.0",
-    "jest": "30.2.0",
-    "nodemon": "^3.1.11"
-  },
-  "keywords": []
+    "jest": "30.2.0"
+  }
 }

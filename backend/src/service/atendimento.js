@@ -1,41 +1,42 @@
-import atendimento from '../model/atendimento.js'
+import Atendimento from '../model/atendimento.js'
 
 
 class ServiceAtendimento {
     
     async FindAll() {
-        return atendimento.FindAll()
+        return Atendimento.FindAll()
 
     }
     async FindOne(id) {
-    if (!id) throw new Error("favor infromar o ID")
+    return Atendimento.findByPk(id)
 
-        const atendimento = await atendimento.findByPk(id)
+    }
+    async Create( dia, hora, valor, concluido) {
+       return Atendimento.create({dia,hora,valor,concluido})
         
-        if(!atendimento)
-            throw new Error(`Atendimento ${id} nao encontrado`)
-        return atendimento
+        
     }
     async Update(id, dia ,hora, valor, concluido) {
-       const oldAtendimento = atendimento.findByPk(id)
-              
-             // onload.User.nome = nome || oldUser.nome
-              onload.Atendimento.senha = senha
-              ?  await bcrypt.hash(String(senha), SALT)
-              :  oldAtendimento.senha
-    }
-     async Create( dia, hora, valor, concluido) {
-            if (!dia || !hora|| !valor || !concluido) {
-                throw new Error("favor preencher todos os campos")
+       const oldAtendimento = Atendimento.findByPk(id)
+           if (!oldAtendimento) {
+            throw new Error('Atendimento não encontrado!')
+           }  
+            oldAtendimento.dia = dia || oldAtendimento.dia
+            oldAtendimento.hora = hora || oldAtendimento.hora
+            oldAtendimento.valor = valor || oldAtendimento.valor
 
+            if(concluido !== undefined) {
+                oldAtendimento.concluido = concluido
             }
-            await atendimento.Create({dia, hora, valor, concluido})
-        
-            
+             oldAtendimento.save()
+            return oldAtendimento
         }
-        async Delete(id) {
-            if (!id) throw new Error("ID nao informado")
-                await atendimento.destroy({where: {id} })
+       async Delete(id) {
+    const atendimento = await Atendimento.findByPk(id)
+    if (!atendimento) {
+      throw new Error('Atendimento não encontrado!')
+    }
+    return atendimento.destroy()
         }
 }
 export default new ServiceAtendimento()

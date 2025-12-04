@@ -1,31 +1,30 @@
-import { useContext, useState } from 'react';
- //import './styles.css'
-import { useNavigate } from 'react-router-dom';
-import { loginCliente } from '../../api/cliente';
-import { AuthContext } from '../../auth/Context';
+import'./style.css'
+import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { loginCliente } from '../../api/cliente'
 import { toast } from 'react-toastify'
+import { AuthContext } from '../../auth/Context'
 
-export default function Login() {  
-  const {login, token} = useContext(AuthContext)
-  const navigate = useNavigate();
+export default function Login() {
+  const { login } = useContext(AuthContext)
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
-  
+
   const handleBackClick = () => {
-    navigate('/');
-  };
-  
+    navigate('/')
+  }
+
   const handleLogin = async (e) => {
     e.preventDefault()
+
     try {
-      const response = await loginCliente(email, senha )
-      console.log()
+      const response = await loginCliente(email, senha)
       login(response.data.token)
       navigate('/clientes')
     } catch (error) {
-      toast("email ou senha invalidos.")
+      toast("Email ou senha inválida!")
     }
-    
   }
 
   return (
@@ -34,23 +33,20 @@ export default function Login() {
         <h2>Login</h2>
         <div className="input-group">
           <label htmlFor="email">Email:</label>
-          <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="input-group">
           <label htmlFor="senha">Senha:</label>
-          <input type="password" id="senha" required  value={senha}onChange={(e) => setSenha(e.target.value)}/>
+          <input type="senha" id="senha" required value={senha} onChange={(e) => setSenha(e.target.value)} />
         </div>
         <p>Não possui conta? <span className="signup">Cadastre-se</span></p>
-        <button className="button" type="submit"
-        onClick={handleLogin}
-        >Entrar</button>
-        <button className="button back-button" onClick={handleBackClick}>
-          Voltar
-        </button>
+        <div className='bnts'>
+          <button className="button" type="submit" onClick={handleLogin}>Entrar</button>
+          <button className="button back-button" onClick={handleBackClick}>
+            Voltar
+          </button>
+        </div>
       </form>
     </div>
-  );
-
-   
-
+  )
 }

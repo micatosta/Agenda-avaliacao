@@ -1,75 +1,62 @@
 import { useEffect, useState } from 'react'
-import {getCliente, deleteCliente} from '../../api/cliente'
-import { Link } from 'react-router-dom'
-import './styles.css'
+import { deleteCliente, getClientes } from '../../api/cliente'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
+function Clientes() {
+  const [ clientes, setClientes ] = useState([])
+  const navigate = useNavigate()
 
+  const handleDelete = async (id) => {
+    const response = await deleteCliente(id)
 
-
-function Cliente() {
-    const [clientes , setClientes] = useState([])
-
-    const handleUpdate = async (cliente) => {
-        navigate('/update/cliente', { state: { cliente } })
+    if (response.status !== 204) {
+      toast("Erro ao deletar, tentar novamente mais tarde.")
+      return
     }
 
-   
-    const handleDelete = async (id) => {
-        const response = await deleteCliente(id)
-       
-        if(response.status !== 204) {
-            return alert("error a deletar, tente novamente mais tarde")
-        }
+    setClientes(prev => prev.filter(cliente => cliente.id !== id))
+  }
 
-        setClientes(clientes => clientes.filter(cliente => cliente.id !== id))
+  const handleUpdate = async (cliente) => {
+    navigate('/update/cliente', { state: { cliente } })
+  }
+
+  useEffect(() => {
+    async function carregar() {
+      const allClientes = await getClientes()
+      setClientes(allClientes)
     }
-    
-    useEffect(() => {
-        async function carregar() {
-            const allCliente =  await getCliente()
-            setClientes(allCliente)
-        }
-        carregar()
-    }, [])
-    
-    return (
-        <main>
-            <div className='cliente-list'>
-            <Link to={'/create/cliente'}>
-                <button>Criar</button>
-            </Link>
-                <div className='cliente header' key='header'>
-                <label>Nome</label>
-                <label>Email</label>
-                <label>Ações</label>
+    carregar()
+  }, [])
+
+  return (
+    <main>
+      <div className='list-group'>
+        <Link to={'/create/cliente'}>
+          <button className='bnt-create'>Criar</button>
+        </Link>
+        <div className='header'>
+          <label>Nome</label>
+          <label>Email</label>
+          <label>Ações</label>
+        </div>
+        {
+          clientes.length == 0
+            ? <>Não tem ninguém</>
+            : clientes.map(cliente =>
+              <div className='list-items' key={cliente.id}>
+                <label>{ cliente.name }</label>
+                <label>{ cliente.email }</label>
+                <div className='actions'>
+                  <button type='button' onClick={() => handleUpdate(cliente)}>Alterar</button>
+                  <button type='button' onClick={() => handleDelete(cliente.id)}>Deletar</button>
                 </div>
-                {
-                   clientes.length == 0
-                        ? <div className='cliente'>
-                            <label>Não tem ngm</label>
-                        </div>
-                        : clientes.map(cliente =>
-                            <div className='cliente' key={cliente.id}>
-                                <label>{cliente.nome}</label>
-                                <label>{cliente.email}</label>
-                                <div className='actions'>
-                                    <button
-                                        type='button'
-                                        onClick={() => handleUpdate(cliente)}
-                                    >Alterar</button>
-                                    <button
-                                        type='button'
-                                        onClick={() => handleDelete(cliente.id)}
-                                    >Deleta</button>
-                                </div>
-                            </div>)
-                }
-            </div>
-        </main>
-    )
+              </div>)
+        }
+      </div>
+    </main>
+  )
 }
 
-export default Cliente
-            
-                
-            
+export default Clientes

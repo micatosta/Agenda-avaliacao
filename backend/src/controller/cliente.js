@@ -1,11 +1,12 @@
 import ServiceCliente from '../service/cliente.js'
 
 class ControllerCliente {
-    async FindAll(req,res) {
+    async FindAll(_,res) {
         try {
-            const cliente = await ServiceCliente.FindAll()
+            const clientes = await ServiceCliente.FindAll()
 
-            res.status(200).send({ cliente })
+            res.status(200).send({ clientes })
+        
         } catch (error) {
             res.status(500).send({ error: error.message }) 
         }
@@ -13,36 +14,39 @@ class ControllerCliente {
     async FindOne(req,res) {
         try {
            const id = req.params.id
-           
            const cliente = await ServiceCliente.FindOne(id)
+           
            res.status(200).send({cliente})
         } catch (error) {
             res.status(500).send({ error: error.message })
         }
         }
+        
         async Create(req,res) {
             try {
                 const { nome, email,senha} = req.body
                 await ServiceCliente.Create(nome,email,senha)
 
-                res.status(201).send('oi')
+                res.status(201).send('Cliente criado com sucesso!')
             } catch (error) {
                 res.status(500).send({ error: error.message })
         }
             }
+            
             async Update(req,res) {
                 try {
                     const id = req.params.id
-                    const nome = req.body.nome
-                    await ServiceCliente.Update(id,nome)
-                    res.status(200).send()
+                    const {nome, email, senha} = req.body
+                    await ServiceCliente.Update(id,nome,email,senha)
+                    res.status(200).send('Cliente atualizado com sucesso!')
                 } catch (error) {
                      res.status(500).send({ error: error.message })
                 }
             }
+            
             async Delete(req,res){
                 try {
-                   const id = req.params.id
+                   const {id} = req.params
                    await ServiceCliente.Delete(id)
                    res.status(204).send() 
                 } catch (error) {

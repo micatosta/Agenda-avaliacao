@@ -4,7 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import { Route, Routes } from 'react-router-dom'
 import Clientes from './pages/Clientes'
-import Home from './pages/Home'
+// import Home from './pages/Home'
 import CreateCliente from './pages/Clientes/create'
 import UpdateCliente from './pages/Clientes/update'
 import { ToastContainer } from 'react-toastify'
@@ -19,7 +19,7 @@ function App() {
 
       <Header />
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<CreateCliente />} />
         <Route path='/login' element={<Login />} />
       
         <Route element={<PrivateRoute />}>
